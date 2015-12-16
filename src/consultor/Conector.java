@@ -2277,7 +2277,7 @@ public class Conector {
             System.out.println("M1: " + sql);
             PreparedStatement preStatement;
             Double mayor = 0.0, menor = 9999999.0;
-            String mayorR = "", menorR = "";
+            String mayorR = "región " + notaMapas(), menorR = "región";
         try {
             preStatement = conn.prepareStatement(sql);
             ResultSet result = preStatement.executeQuery();
@@ -2285,77 +2285,77 @@ public class Conector {
                         Double valor = result.getDouble("reg1");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región I";
+                            mayorR += " I";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región I";
+                            menorR += " I";
                         }
             		texto += "1"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg2");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región II";
+                            mayorR += " II";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región II";
+                            menorR += " II";
                         }
             		texto += "2"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg3");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región III";
+                            mayorR += " III";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región III";
+                            menorR += " III";
                         }
             		texto += "3"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg4");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región IV";
+                            mayorR += " IV";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región IV";
+                            menorR += " IV";
                         }
             		texto += "4"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg5");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región V";
+                            mayorR += " V";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región V";
+                            menorR += " V";
                         }
             		texto += "5"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg6");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región VI";
+                            mayorR += " VI";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región VI";
+                            menorR += " VI";
                         }
             		texto += "6"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg7");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región VII";
+                            mayorR += " VII";
                         }
             		texto += "7"+";"+ getNumero(valor) + "\n";
                         valor = result.getDouble("reg8");
                         if(valor > mayor){
                             mayor = valor;
-                            mayorR = "región VIII";
+                            mayorR += " VIII";
                         }
                         if(valor < menor){
                             menor = valor;
-                            menorR = "región VIII";
+                            menorR += " VIII";
                         }
             		texto += "8"+";"+ getNumero(valor) + "\n";
                 }
@@ -2432,7 +2432,7 @@ public class Conector {
                     }
                 }
             }
-            String descripcion = "En el mes de " + getFecha() + ", las regiones " + listaRegiones.get(0) + " y " + listaRegiones.get(1)
+            String descripcion = "En el mes de " + getFecha() + ", las regiones " + notaMapas() + listaRegiones.get(0) + " y " + listaRegiones.get(1)
                     + " presentan las variaciones mensuales más altas en el nivel de precios, con valores de "
                     + getNumeroDosDecimales(listaVar.get(0)) + "\\% y " + getNumeroDosDecimales(listaVar.get(1)) + "\\%, respectivamente."
                     + " Por su parte, las regiones "
@@ -2555,7 +2555,7 @@ public class Conector {
                     }
                 }
             }
-            String descripcion = "En el mes de " + getFecha() + ", las regiones " + listaRegiones.get(0) + " y " + listaRegiones.get(1)
+            String descripcion = "En el mes de " + getFecha() + ", las regiones " + notaMapas() + listaRegiones.get(0) + " y " + listaRegiones.get(1)
                     + " presentan las incidencias más altas en la variación mensual, con incidencias de "
                     + getNumeroDosDecimales(listaIncidencias.get(0)) + "\\% y " + getNumeroDosDecimales(listaIncidencias.get(1)) + "\\% respectivamente. Por su parte, las regiones "
                     + listaRegiones.get(listaRegiones.size()-1) + " y " + listaRegiones.get(listaRegiones.size()-2)
@@ -2614,7 +2614,7 @@ public class Conector {
                     }
                 }
             }
-            String descripcion = "En el mes de " + getFecha() + ", las regiones " + listaRegiones.get(0) + " y " + listaRegiones.get(1)
+            String descripcion = "En el mes de " + getFecha() + ", las regiones " + notaMapas() + listaRegiones.get(0) + " y " + listaRegiones.get(1)
                     + " presentan las variaciones interanuales más altas a nivel de precios, con valores de "
                     + getNumeroDosDecimales(listaVar.get(0)) + "\\% y " + getNumeroDosDecimales(listaVar.get(1)) + "\\% respectivamente. Por su parte, las regiones "
                     + listaRegiones.get(listaRegiones.size()-1) + " y " + listaRegiones.get(listaRegiones.size()-1)
@@ -2715,7 +2715,7 @@ public class Conector {
                     }
                 }
             }
-            String descripcion = "En el mes de " + getFecha() + ", las regiones " + listaRegiones.get(0) + " y " + listaRegiones.get(1)
+            String descripcion = "En el mes de " + getFecha() + ", las regiones " + notaMapas() + listaRegiones.get(0) + " y " + listaRegiones.get(1)
                     + " presentan las incidencias más altas en la variación anual, con incidencias de "
                     + getNumeroDosDecimales(listaIncidencias.get(0)) + "\\% y " + getNumeroDosDecimales(listaIncidencias.get(1)) + "\\% respectivamente. Por su parte, las regiones "
                     + listaRegiones.get(listaRegiones.size()-1) + " y " + listaRegiones.get(listaRegiones.size()-1)
@@ -3618,4 +3618,17 @@ public class Conector {
         String[] resultado = {texto, descripcion};
         return resultado;
      }
+    
+    private String notaMapas(){
+        return "\\footnote{Guatemala se encuentra organizada en 8 regiones;"
+                + " La región I o Metropolitana está conformada"
+                + " por el departamento de Guatemala, la región II o Norte"
+                + " por Alta Verapaz y Baja Verapaz,"
+                + " la región III o Nororiental por Chiquimula, El Progreso, Izabal y Zacapa,"
+                + " la región IV o Suroriental por Jutiapa, Jalapa y Santa Rosa,"
+                + " la región V o Central por Chimaltenango, Sacatepéquez y Escuintla,"
+                + " la región VI o Suroccidental por Quetzaltenango, Retalhuleu, San Marcos, Suchitepéquez y Escuintla,"
+                + " la región VII o Noroccidental por Huehuetenango y Quiché"
+                + " y la región VIII por Petén.}";
+    }
 }
