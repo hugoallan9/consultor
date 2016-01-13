@@ -286,6 +286,7 @@ public class Conector {
         if(mes==1) return 12;
         else return mes-1;
     }
+    
 
     private String[] csv1_x(int varC){
         String texto = "x;y\n";
@@ -338,6 +339,7 @@ public class Conector {
                         break;
                 }
                 String ultimoMes = "";
+                String ultimoAnio = "";
             try {
 
                 // FileReader reads text files in the default encoding.
@@ -358,6 +360,7 @@ public class Conector {
                             lista.add(new Double(datos[1]));
                         }
                         ultimoMes = datos[0].substring(0, 3);
+                        ultimoAnio = datos[0].substring(datos[0].length()-4, datos[0].length());
                     }
                 }
                 bufferedReader.close();
@@ -408,7 +411,7 @@ public class Conector {
                                 + "básicos, ponderado con las cuotas medias de exportación de cada uno de los grupos para 2002-2004. }"
                                 + " de la FAO\\footnote{Organización de las Naciones Unidas para la"
                                 + " Alimentación y la Agricultura." +
-                                "} registró en " + ultimoMes + " " + anioActual
+                                "} registró en " + ultimoMes + " " + ultimoAnio
                                 + " un índice de " + getNumeroDosDecimales((Math.round((valorActual)*100.0)/100.0)) + ", lo que representa una variación de "
                                 + getNumeroDosDecimales((Math.round(((valorActual/valorAnioAnterior - 1) * 100)*100.0)/100.0)) + "\\% respecto a "
                                 + getMesCadenaMin(mesAnterior) + " " + anioAnterior + " y de "
@@ -418,17 +421,17 @@ public class Conector {
                     case 2:
                         descripcion = "El precio internacional del petróleo\\footnote{Se refiere al crudo West "
                                 + "Texas Intermediate (WTI) producido en Texas y el sur de Oklahoma} "
-                                + " registró en " + getMesCadenaMin(mesActual) + " " + anioActual
+                                + " registró en " + ultimoMes + " " + ultimoAnio
                                 + " un precio medio de US\\$" + getNumeroDosDecimales((Math.round((valorActual)*100.0)/100.0)) + " por barril, "
                                 + "lo que representa una variación de "
                                 + getNumeroDosDecimales((Math.round(((valorActual/valorAnioAnterior - 1) * 100)*100.0)/100.0)) + "\\%"
                                 + " (" + getFlechita(valorActual, valorAnioAnterior) + " US\\$"
                                 + getNumero((Math.round(Math.abs(valorActual-valorAnioAnterior)*100.0)/100.0)) + ") respecto a "
-                                + getMesCadenaMin(mesActual) + " " + anioAnterior + " y de "
+                                + ultimoMes + " " + (Integer.parseInt(ultimoAnio) - 1) + " y de "
                                 + getNumeroDosDecimales((Math.round(((valorActual/valorMesAnterior - 1) * 100)*100.0)/100.0)) + "\\%"
                                 + " (" + getFlechita(valorActual, valorMesAnterior) + " US\\$"
                                 + getNumeroDosDecimales((Math.round((valorActual-valorMesAnterior)*100.0)/100.0)) + ") respecto a "
-                                + getMesCadenaMin(mesAnterior) + " " + anioActual + ".";
+                                + getNombreMesAnterior(ultimoMes) + " " + ultimoAnio + ".";
                         break;
                     case 3:
                         descripcion = "El tipo de cambio de referencia\\footnote{El tipo de cambio de referencia "
@@ -437,13 +440,13 @@ public class Conector {
                                 + "monto de divisas compradas y al "
                                 + "monto de divisas vendidas y sus respectivas equivalencias en moneda nacional.}"
                                 + " del quetzal respecto al dólar de los Estados Unidos de América, "
-                                + "registró en " + getMesCadenaMin(mesActual) + " " + anioActual
+                                + "registró en " + ultimoMes + " " + ultimoAnio
                                 + " un precio medio de Q" + getNumeroDosDecimales((Math.round((valorActual)*100.0)/100.0)) + " por US\\$1.00, "
                                 + "lo que representa una variación de "
                                 + getNumeroDosDecimales((Math.round(((valorActual/valorAnioAnterior - 1) * 100)*100.0)/100.0)) + "\\% respecto a "
-                                + getMesCadenaMin(mesActual) + " " + anioAnterior + " y de "
+                                + ultimoMes + " " + (Integer.parseInt(ultimoAnio) - 1) + " y de "
                                 + getNumeroDosDecimales((Math.round(((valorActual/valorMesAnterior - 1) * 100)*100.0)/100.0)) + "\\% respecto a "
-                                + getMesCadenaMin(mesAnterior) + " " + anioActual + ".";
+                                + getNombreMesAnterior(ultimoMes) + " " + ultimoAnio + ".";
                         break;
                     case 4:
                         descripcion = "El promedio ponderado preliminar de la tasa de interés activa\\footnote{Es el "
@@ -452,22 +455,22 @@ public class Conector {
                                 + "banco central, cobran por los diferentes tipos de servicios de crédito a"
                                 + " los usuarios de los mismos.}"
                                 + " en moneda nacional se "
-                                + "ubicó en " + getMesCadenaMin(mesActual) + " " + anioActual
+                                + "ubicó en " + ultimoMes + " " + ultimoAnio
                                 + " en " + getNumeroDosDecimales((Math.round((valorActual)*100.0)/100.0)) + "\\%, "
-                                + "" + getAumento(valorActual, valorAnioAnterior, valorMesAnterior)
+                                + "" + getAumento(valorActual, valorAnioAnterior, valorMesAnterior, ultimoMes, ultimoAnio)
 
                                 + " y de "
                                 + getNumeroDosDecimales((Math.round(((valorActual/valorMesAnterior - 1) * 100)*100.0)/100.0)) + "\\% "
                                 + "respecto a "
-                                + getMesCadenaMin(mesAnterior) + " " + anioActual + ".";
+                                + getNombreMesAnterior(ultimoMes) + " " + ultimoAnio + ".";
                         break;
                     case 5:
                         descripcion = "El Índice de Precios al Consumidor en los Estados Unidos de "
                                 + "América\\footnote{Para mayor información sobre el indice de precios al consumidor de los "
                                 + "Estados Unidos, visite \\url{http://www.bls.gov/cpi}.} registró una variación "
-                                + "interanual al mes de " + getMesCadenaMin(mesAnterior) + " " + anioActual
+                                + "interanual al mes de " + ultimoMes + " " + ultimoAnio
                                 + " de " + getNumeroDosDecimales((Math.round((valorActual)*100.0)/100.0)) + "\\%. \\\\ \\\\ "
-                                + "En " + getMesCadenaMin(mesAnterior) + " " + anioAnterior + " la variación "
+                                + "En " + ultimoMes + " " + (Integer.parseInt(ultimoAnio) - 1) + " la variación "
                                 + "interanual se ubicó en " + getPuntosEEUU(valorActual, valorAnioAnterior);
                         /*
                          y una variación mensual de "
@@ -479,14 +482,14 @@ public class Conector {
                         descripcion = "El Índice de Precios al Consumidor en México\\footnote{Para "
                                 + "mayor información sobre el índice de precios al consumidor "
                                 + "en México, visite \\url{http://www.inegi.org.mx}.} registró una "
-                                + "variación interanual al mes de " + getMesCadenaMin(mesAnterior) + " " + anioActual
+                                + "variación interanual al mes de " + ultimoMes+ " " + ultimoAnio
                                 + " de " + getNumeroDosDecimales((Math.round((valorActual)*100.0)/100.0)) + "\\%. \\\\ \\\\"
-                                + "En " + getMesCadenaMin(mesAnterior) + " " + anioAnterior + " la variación "
+                                + "En " + ultimoMes + " " + (Integer.parseInt(ultimoAnio) - 1) + " la variación "
                                 + "interanual se ubicó en " + getPuntosEEUU(valorActual, valorAnioAnterior);
                         
                         break;
                     case 7:
-                        descripcion = "Para el mes de " + getMesCadenaMin(mesAnterior) + " " + anioActual
+                        descripcion = "Para el mes de " + getNombreMesAnterior(ultimoMes) + " " + anioActual
                             + ", en la región centroamericana, " + getPais(paisMayor)
                             + " presentó la mayor tasa de inflación interanual de " + valMayor + "\\%"
                             + ", mientras que " + getPais(paisMenor)
@@ -521,8 +524,24 @@ public class Conector {
         else if(abreviatura.toLowerCase().equals("oct")) return "octubre";
         else if(abreviatura.toLowerCase().equals("nov")) return "noviembre";
         else if(abreviatura.toLowerCase().equals("dic")) return "diciembre";
-        else return getMesCadenaMin(mesActual);
+        else return getMesCadenaMin(mesActual);        
     }
+        private String getNombreMesAnterior(String abreviatura){
+        if(abreviatura.toLowerCase().equals("enero")) return "diciembre";
+        else if(abreviatura.toLowerCase().equals("febrero")) return "enero";
+        else if(abreviatura.toLowerCase().equals("marzo")) return "febrero";
+        else if(abreviatura.toLowerCase().equals("abril")) return "marzo";
+        else if(abreviatura.toLowerCase().equals("mayo")) return "abril";
+        else if(abreviatura.toLowerCase().equals("junio")) return "mayo";
+        else if(abreviatura.toLowerCase().equals("julio")) return "junio";
+        else if(abreviatura.toLowerCase().equals("agosto")) return "julio";
+        else if(abreviatura.toLowerCase().equals("septiembre")) return "agosto";
+        else if(abreviatura.toLowerCase().equals("octubre")) return "septiembre";
+        else if(abreviatura.toLowerCase().equals("noviembre")) return "octubre";
+        else if(abreviatura.toLowerCase().equals("diciembre")) return "noviembre";
+        else return ":P";
+    }
+    
     
     private String getPais(int n){
         switch(n){
@@ -1006,16 +1025,16 @@ public class Conector {
          }
      }
      
-     private String getAumento(Double actual, Double valAnioAnterior, Double valMesAnterior){
+     private String getAumento(Double actual, Double valAnioAnterior, Double valMesAnterior, String ultimoMes, String ultimoAnio){
          String res = "";
          if(actual>valAnioAnterior) res += " lo que representa un aumento de "
                  + getNumeroDosDecimales(Math.round(((actual-valAnioAnterior)*100.0))/100.0)
                  + " puntos porcentuales respecto a "
-                 + getMesCadenaMin(mesActual) + " " + anioAnterior ;
+                 + ultimoMes + " " + (Integer.parseInt(ultimoAnio)-1) ;
          else if(anioAnterior>actual) res += " lo que representa una disminución de "
                  + getNumeroDosDecimales(Math.round(((valAnioAnterior - actual)*100.0))/100.0)
                  + " puntos porcentuales respecto a "
-                 + getMesCadenaMin(mesActual) + " " + anioAnterior ;
+                 + ultimoMes + " " +  (Integer.parseInt(ultimoAnio)-1);
          else return " porcentaje que iguala a la del año anterior";
          /*if(actual>valMesAnterior) res+= " y un aumento de "
                                     + getNumeroDosDecimales(Math.round(((actual-valMesAnterior)*100.0))/100.0)
@@ -2368,7 +2387,7 @@ public class Conector {
         String descripcion = "En el mes de " + getMesCadenaMin(mesActual) + " del año " + anioActual
                 + ", la " + mayorR + " presentó el mayor índice de precios al consumidor, "
                 + " el cual fue de " + getNumeroUnDecimal(mayor) + ", mientras que la " + menorR + " presentó el índice"
-                + " más bajo, de " + getNumeroUnDecimal(menor) + "\\footnote{PONER REGIONES DONDE CORRESPONDE ahi arribita}.";
+                + " más bajo, de " + getNumeroUnDecimal(menor);
         String[] resultado = {texto, descripcion};
         return resultado;
     }
@@ -2909,6 +2928,7 @@ public class Conector {
      }
 
     private String getMesCadenaMin(int mes){
+        
          if(mes == 1)return "enero";
          else if(mes == 2)return "febrero";
          else if(mes == 3)return "marzo";
@@ -3433,7 +3453,7 @@ public class Conector {
                     + " AND f.mes >= " + (mesActual - 1) + "))"
                     + " ORDER BY i.codigo, f.anio, f.mes";
             }
-            //System.out.println("r_04: " + sql);
+            System.out.println("r_04: " + sql);
             PreparedStatement preStatement;
             Double mayor = -100.0, menor = 100.0, valor = 0.0;
             String mesMayor = "", mesMenor = "", divisionMayor = "", divisionMenor = "";
@@ -3449,8 +3469,10 @@ public class Conector {
             for(int j=0; j<13; j++){
                 if(result.next()){
                     ipcAnterior = Double.parseDouble(result.getString(region));
+                    System.out.println("El ipc anterior es: " + ipcAnterior);
                 }
                 for(int i=0; i<13; i++){
+                    System.out.println("El ipc anterior verdadero es: " + ipcAnterior);
                      if(result.next()){
                          ipc = Double.parseDouble(result.getString(region));
                          valor = ((ipc/ipcAnterior - 1) * 100);
@@ -3479,6 +3501,7 @@ public class Conector {
                              mesMenor = getMesCadenaMin(nMes);
                              divisionMenor = getDivision(j);
                          }
+                         ipcAnterior= ipc;
                      }
                 }
             }
@@ -3627,7 +3650,7 @@ public class Conector {
                 + " la región III o Nororiental por Chiquimula, El Progreso, Izabal y Zacapa,"
                 + " la región IV o Suroriental por Jutiapa, Jalapa y Santa Rosa,"
                 + " la región V o Central por Chimaltenango, Sacatepéquez y Escuintla,"
-                + " la región VI o Suroccidental por Quetzaltenango, Retalhuleu, San Marcos, Suchitepéquez y Escuintla,"
+                + " la región VI o Suroccidental por Quetzaltenango, Retalhuleu, San Marcos, Suchitepéquez, Sololá y Totonicapán,"
                 + " la región VII o Noroccidental por Huehuetenango y Quiché"
                 + " y la región VIII por Petén.}";
     }
